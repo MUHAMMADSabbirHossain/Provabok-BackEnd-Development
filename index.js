@@ -1,7 +1,8 @@
 /* All packages imported */
 const express = require(`express`);
 const app = express();
-const port = 5000;
+require(`dotenv`).config();
+const port = process.env.PORT || 5000;
 
 
 /* all routes */
@@ -73,7 +74,9 @@ app.get(`/`, (req, res) => {
         `)
 });
 
+
 /* port listener */
 app.listen(port, (req, res) => {
     console.log(`Provabok Server Software is running now on PORT: ${port}.`);
+    // console.log(process.env);
 });
