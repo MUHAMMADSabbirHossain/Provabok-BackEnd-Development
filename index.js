@@ -3,6 +3,8 @@ const express = require(`express`);
 const app = express();
 const port = 5000;
 
+
+/* all routes */
 app.get(`/`, (req, res) => {
     res.send(`
         <!DOCTYPE html>
@@ -71,6 +73,7 @@ app.get(`/`, (req, res) => {
         `)
 });
 
+/* port listener */
 app.listen(port, (req, res) => {
-    console.log(`Provabok Server Software is running now PORT: ${port}.`);
+    console.log(`Provabok Server Software is running now on PORT: ${port}.`);
 });
