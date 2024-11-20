@@ -43,6 +43,14 @@ async function run() {
         /* All administration listed routes */
 
         /* jobs */
+        app.get(`/v1/jobs`, async (req, res) => {
+
+            const findRes = await jobs.find().toArray();
+            console.log(`jobs: `, findRes);
+
+            res.send(findRes);
+        });
+
         app.post(`/v1/jobs/create-item`, async (req, res) => {
             const item = req.body;
             console.log(`create-item: `, item);
