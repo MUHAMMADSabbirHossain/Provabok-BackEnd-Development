@@ -61,6 +61,24 @@ async function run() {
             res.send(insertedRes);
         });
 
+        app.patch(`/v1/jobs/edit-item/:id`, async (req, res) => {
+            const id = req.params.id;
+            const editedDoc = req.body;
+            console.log(`id: ${id}, body: ${editedDoc}`);
+
+            const updateDoc = {
+                $set: editedDoc,
+            };
+            console.log(updateDoc);
+
+
+
+            const filter = { _id: new ObjectId(id) };
+            const updatedRes = await jobs.updateOne(filter, updateDoc);
+
+            res.send(updatedRes);
+        });
+
         app.delete(`/v1/jobs/del-item/:id`, async (req, res) => {
             console.log(req.params.id);
             const delItemId = req.params.id;
