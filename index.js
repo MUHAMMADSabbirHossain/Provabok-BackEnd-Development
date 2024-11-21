@@ -12,7 +12,7 @@ app.use(express.json());
 
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASSWORD}@provabok.zzy7f.mongodb.net/?retryWrites=true&w=majority&appName=Provabok`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -46,7 +46,7 @@ async function run() {
         app.get(`/v1/jobs`, async (req, res) => {
 
             const findRes = await jobs.find().toArray();
-            console.log(`jobs: `, findRes);
+            // console.log(`jobs: `, findRes);
 
             res.send(findRes);
         });
@@ -61,6 +61,17 @@ async function run() {
             res.send(insertedRes);
         });
 
+        app.delete(`/v1/jobs/del-item/:id`, async (req, res) => {
+            console.log(req.params.id);
+            const delItemId = req.params.id;
+
+            const query = { _id: new ObjectId(delItemId) }
+
+            const delRes = await jobs.deleteOne(query);
+            console.log(delRes);
+
+            res.send(delRes);
+        });
 
 
     } finally {
