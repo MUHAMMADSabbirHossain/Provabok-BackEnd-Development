@@ -6,6 +6,7 @@ const cors = require(`cors`);
 const port = process.env.PORT || 5000;
 
 
+
 /* Express Middleware */
 app.use(cors());
 app.use(express.json());
@@ -43,7 +44,7 @@ async function run() {
         /* All administration listed routes */
 
         /* jobs */
-        app.get(`/v1/jobs`, async (req, res) => {
+        app.get(`/v1/jobs/circulars`, async (req, res) => {
 
             const findRes = await jobs.find().toArray();
             // console.log(`jobs: `, findRes);
@@ -51,7 +52,7 @@ async function run() {
             res.send(findRes);
         });
 
-        app.post(`/v1/jobs/create-item`, async (req, res) => {
+        app.post(`/v1/jobs/circulars/create-item`, async (req, res) => {
             const item = req.body;
             console.log(`create-item: `, item);
 
@@ -61,7 +62,7 @@ async function run() {
             res.send(insertedRes);
         });
 
-        app.patch(`/v1/jobs/edit-item/:id`, async (req, res) => {
+        app.patch(`/v1/jobs/circulars/update-item/:id`, async (req, res) => {
             const id = req.params.id;
             const editedDoc = req.body;
             console.log(`id: ${id}, body: ${editedDoc}`);
@@ -71,15 +72,14 @@ async function run() {
             };
             console.log(updateDoc);
 
-
-
             const filter = { _id: new ObjectId(id) };
+
             const updatedRes = await jobs.updateOne(filter, updateDoc);
 
             res.send(updatedRes);
         });
 
-        app.delete(`/v1/jobs/del-item/:id`, async (req, res) => {
+        app.delete(`/v1/jobs/circulars/del-item/:id`, async (req, res) => {
             console.log(req.params.id);
             const delItemId = req.params.id;
 
@@ -90,8 +90,6 @@ async function run() {
 
             res.send(delRes);
         });
-
-
     } finally {
         // Ensures that the client will close when you finish/error
         // await client.close();
