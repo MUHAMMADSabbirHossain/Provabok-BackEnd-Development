@@ -35,7 +35,7 @@ async function run() {
 
         /* All collections of Database */
         const database = client.db(`provabok`);
-        const jobs = database.collection(`jobs`);
+        const circulars = database.collection(`circulars`);
 
 
         /* All client listed routes */
@@ -46,7 +46,7 @@ async function run() {
         /* jobs */
         app.get(`/v1/jobs/circulars`, async (req, res) => {
 
-            const findRes = await jobs.find().toArray();
+            const findRes = await circulars.find().toArray();
             // console.log(`jobs: `, findRes);
 
             res.send(findRes);
@@ -56,7 +56,7 @@ async function run() {
             const item = req.body;
             console.log(`create-item: `, item);
 
-            const insertedRes = await jobs.insertOne(item);
+            const insertedRes = await circulars.insertOne(item);
             console.log(insertedRes);
 
             res.send(insertedRes);
@@ -74,7 +74,7 @@ async function run() {
 
             const filter = { _id: new ObjectId(id) };
 
-            const updatedRes = await jobs.updateOne(filter, updateDoc);
+            const updatedRes = await circulars.updateOne(filter, updateDoc);
 
             res.send(updatedRes);
         });
@@ -85,7 +85,7 @@ async function run() {
 
             const query = { _id: new ObjectId(delItemId) }
 
-            const delRes = await jobs.deleteOne(query);
+            const delRes = await circulars.deleteOne(query);
             console.log(delRes);
 
             res.send(delRes);
