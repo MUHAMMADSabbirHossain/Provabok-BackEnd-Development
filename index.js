@@ -4,18 +4,9 @@ const app = express();
 require(`dotenv`).config();
 const cors = require(`cors`);
 const port = process.env.PORT || 5000;
-
-
-
-/* Express Middleware */
-app.use(cors());
-app.use(express.json());
-
-
-
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_USER_PASSWORD}@provabok.zzy7f.mongodb.net/?retryWrites=true&w=majority&appName=Provabok`;
-
+const uri = "mongodb+srv://provabok:vROHeRRoDyl4uyjK@provabok.zzy7f.mongodb.net/?retryWrites=true&w=majority&appName=Provabok";
+// const uri = "mongodb+srv://provabok:<db_password>@provabok.zzy7f.mongodb.net/?retryWrites=true&w=majority&appName=Provabok";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
     serverApi: {
@@ -25,12 +16,20 @@ const client = new MongoClient(uri, {
     }
 });
 
+
+
+/* Express Middleware */
+app.use(cors());
+app.use(express.json());
+
+
+
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        // await client.connect();
         // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
+        // await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
         /* All collections of Database */
@@ -83,7 +82,7 @@ async function run() {
             console.log(req.params.id);
             const delItemId = req.params.id;
 
-            const query = { _id: new ObjectId(delItemId) }
+            const query = { _id: new ObjectId(delItemId) };
 
             const delRes = await circulars.deleteOne(query);
             console.log(delRes);
@@ -97,7 +96,9 @@ async function run() {
 }
 run().catch(console.dir);
 
-
+// app.get(`/v1/jobs/circulars`, async (req, res) => {
+//     res.send("circulars");
+// });
 
 /* all routes */
 app.get(`/`, (req, res) => {
@@ -109,7 +110,7 @@ app.get(`/`, (req, res) => {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Provabok</title>
             </head>
-            <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #ffffff; overflow-x: hidden; height: 100vh;">
+            <body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #ffffff; overflow-x: hidden; height: 100vh; position: relative;">
 
                 <!-- Header -->
                 <header style="background-color: royalblue; color: white; padding: 15px 20px; text-align: center;">
@@ -142,7 +143,7 @@ app.get(`/`, (req, res) => {
                 </section>
 
                 <!-- Footer -->
-                <footer style="background-color: royalblue; color: white; text-align: center; padding: 10px 20px; animation: fadeIn 1s; width: 100%; position: absolute; bottom: 0px;">
+                <footer style="background-color: royalblue; color: white; text-align: center; padding: 10px 20px; animation: fadeIn 1s; width: 100%; position: absolute; bottom: 0;">
                     <p style="margin: 0; font-size: 14px;">&copy; ${new Date().getFullYear()} Provabok. All rights reserved.</p>
                 </footer>
 
